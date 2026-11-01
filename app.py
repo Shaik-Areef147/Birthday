@@ -36,12 +36,12 @@ app.config["MAX_CONTENT_LENGTH"] = 40 * 1024 * 1024  # 40 MB per request
 app.config["SECRET_KEY"] = os.environ.get("SECRET_KEY", "change-me")
 
 FALLBACK_GIFT = {
-    "name": "Aanya",
-    "date": "28 September",
+    "name": "Chitti",
+    "date": "04 November",
     "sender": "Someone Special",
     "theme": "pastel",
     "message": [
-        "Happy birthday, you wonderful human.",
+        "Happy birthday, you Beautiful Girl.",
         "I wanted to make you something that felt a little like you - warm, a bit silly, and full of tiny surprises.",
         "Thank you for every late-night talk, every ridiculous inside joke, every time you showed up without being asked.",
         "This year, I hope you get the slow mornings, the loud laughs, the good news you've been waiting for, and at least one perfect slice of cake.",
