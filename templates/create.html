@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Create a birthday surprise</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;700&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box}
+  body{margin:0;font-family:'Nunito',system-ui,sans-serif;background:linear-gradient(160deg,#fff6ee,#f8dfe6);color:#2b2230;min-height:100vh;padding:24px 16px 60px}
+  .card{max-width:620px;margin:0 auto;background:#fff;border-radius:22px;padding:28px 24px;box-shadow:0 18px 40px -16px rgba(120,60,90,.35)}
+  h1{font-family:'Fraunces',serif;font-weight:700;margin:0 0 4px;font-size:30px}
+  p.lead{color:#6f6578;margin:0 0 20px}
+  label{display:block;font-weight:700;font-size:14px;margin:16px 0 6px}
+  input,textarea,select{width:100%;padding:12px 14px;border:2px solid #efd9e3;border-radius:12px;font:inherit;background:#fffafc}
+  input:focus,textarea:focus,select:focus{outline:none;border-color:#e0457f}
+  textarea{min-height:190px;resize:vertical;line-height:1.5}
+  .row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .ph{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px}
+  small{color:#8a7f92}
+  button{margin-top:24px;width:100%;padding:15px;border:0;border-radius:999px;background:linear-gradient(180deg,#f06fa0,#e0457f);color:#fff;font:700 17px 'Nunito';cursor:pointer}
+  .err{background:#ffe3e8;color:#a3123a;padding:10px 14px;border-radius:10px;margin-bottom:10px;font-weight:700}
+  @media(max-width:520px){.row,.ph{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<form class="card" method="post" action="{{ url_for('create') }}" enctype="multipart/form-data">
+  <h1>Create a surprise 🎂</h1>
+  <p class="lead">Fill this in and get a private link to share.</p>
+  {% if error %}<div class="err">{{ error }}</div>{% endif %}
+
+  <div class="row">
+    <div><label for="name">Her / his name</label><input id="name" name="name" maxlength="40" required placeholder="Aanya"></div>
+    <div><label for="date">Birthday date</label><input id="date" name="date" maxlength="30" placeholder="28 September"></div>
+  </div>
+  <div class="row">
+    <div><label for="sender">From (your name)</label><input id="sender" name="sender" maxlength="40" placeholder="Someone Special"></div>
+    <div><label for="theme">Theme</label>
+      <select id="theme" name="theme">{% for t in themes %}<option value="{{ t }}">{{ t|capitalize }}</option>{% endfor %}</select></div>
+  </div>
+
+  <label for="message">Letter (leave a blank line between paragraphs)</label>
+  <textarea id="message" name="message" placeholder="Happy birthday, you wonderful human.&#10;&#10;I wanted to make you something..."></textarea>
+
+  <label>Photos (up to 6) + a short caption for each</label>
+  {% for i in range(6) %}
+  <div class="ph"><input type="file" name="photos" accept="image/*"><input name="captions" maxlength="40" placeholder="caption, e.g. that sunny picnic"></div>
+  {% endfor %}
+  <small>Photos are resized automatically.</small>
+
+  {% if key_required %}<label for="key">Creator key</label><input id="key" name="key" type="password" required>{% endif %}
+  <button type="submit">Create my surprise ✨</button>
+</form>
+</body>
+</html>

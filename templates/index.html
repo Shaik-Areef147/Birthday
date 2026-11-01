@@ -1,0 +1,333 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>A birthday surprise for {{ gift.name }}</title>
+<meta name="theme-color" content="#fff4ec">
+<meta property="og:title" content="There's something for you, {{ gift.name }}">
+<meta property="og:description" content="A tiny birthday surprise, made just for you.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,700;1,9..144,500&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body data-theme="{{ gift.theme }}">
+
+<!-- ============ SHARED SVG ART ============ -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <!-- Teddy base (body, head, ears, snout) -->
+    <symbol id="tb" viewBox="0 0 120 140">
+      <ellipse cx="38" cy="132" rx="14" ry="9" fill="#d98a2b"/>
+      <ellipse cx="82" cy="132" rx="14" ry="9" fill="#d98a2b"/>
+      <ellipse cx="38" cy="132" rx="7" ry="5" fill="#f4a9a0"/>
+      <ellipse cx="82" cy="132" rx="7" ry="5" fill="#f4a9a0"/>
+      <ellipse cx="60" cy="104" rx="35" ry="33" fill="#e8a13a"/>
+      <ellipse cx="60" cy="110" rx="21" ry="21" fill="#f8d48e"/>
+      <ellipse cx="27" cy="98" rx="10" ry="16" fill="#e8a13a" transform="rotate(25 27 98)"/>
+      <ellipse cx="93" cy="98" rx="10" ry="16" fill="#e8a13a" transform="rotate(-25 93 98)"/>
+      <circle cx="28" cy="30" r="16" fill="#d98a2b"/><circle cx="28" cy="30" r="8" fill="#f5b97a"/>
+      <circle cx="92" cy="30" r="16" fill="#d98a2b"/><circle cx="92" cy="30" r="8" fill="#f5b97a"/>
+      <circle cx="60" cy="58" r="38" fill="#eeaa44"/>
+      <ellipse cx="60" cy="72" rx="17" ry="13" fill="#fadfa6"/>
+      <ellipse cx="60" cy="66" rx="5.5" ry="4" fill="#6b3b1d"/>
+      <circle cx="38" cy="68" r="6.5" fill="#f58b8b" opacity=".55"/>
+      <circle cx="82" cy="68" r="6.5" fill="#f58b8b" opacity=".55"/>
+    </symbol>
+    <symbol id="hat" viewBox="0 0 120 140">
+      <g transform="rotate(-12 60 20)">
+        <polygon points="60,-8 40,28 80,28" fill="#f6a5c0"/>
+        <polygon points="60,-8 52,10 68,10" fill="#fff"/>
+        <path d="M42 24 L78 24" stroke="#9ad8c8" stroke-width="5" stroke-linecap="round"/>
+        <circle cx="60" cy="-8" r="5" fill="#ffe27a"/>
+      </g>
+    </symbol>
+    <!-- awake teddy -->
+    <symbol id="teddy" viewBox="0 0 120 140">
+      <use href="#tb" width="120" height="140"/>
+      <circle cx="46" cy="54" r="4.2" fill="#3b2314"/><circle cx="74" cy="54" r="4.2" fill="#3b2314"/>
+      <circle cx="47.5" cy="52.5" r="1.4" fill="#fff"/><circle cx="75.5" cy="52.5" r="1.4" fill="#fff"/>
+      <path d="M52 76 Q60 84 68 76" stroke="#6b3b1d" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+      <use href="#hat" width="120" height="140"/>
+    </symbol>
+    <!-- sleeping teddy -->
+    <symbol id="teddySleep" viewBox="0 0 120 140">
+      <use href="#tb" width="120" height="140"/>
+      <path d="M40 55 Q46 60 52 55" stroke="#3b2314" stroke-width="2.6" fill="none" stroke-linecap="round"/>
+      <path d="M68 55 Q74 60 80 55" stroke="#3b2314" stroke-width="2.6" fill="none" stroke-linecap="round"/>
+      <path d="M54 77 Q60 80 66 77" stroke="#6b3b1d" stroke-width="2.2" fill="none" stroke-linecap="round"/>
+      <use href="#hat" width="120" height="140"/>
+    </symbol>
+    <!-- happy (eyes closed, big smile) teddy -->
+    <symbol id="teddyJoy" viewBox="0 0 120 140">
+      <use href="#tb" width="120" height="140"/>
+      <path d="M39 56 Q46 48 53 56" stroke="#3b2314" stroke-width="2.8" fill="none" stroke-linecap="round"/>
+      <path d="M67 56 Q74 48 81 56" stroke="#3b2314" stroke-width="2.8" fill="none" stroke-linecap="round"/>
+      <path d="M50 76 Q60 90 70 76 Z" fill="#c9584a"/>
+      <use href="#hat" width="120" height="140"/>
+    </symbol>
+    <!-- balloon -->
+    <symbol id="balloon" viewBox="0 0 60 100">
+      <path d="M30 70 Q26 82 30 98" stroke="#b08a7a" stroke-width="1.5" fill="none"/>
+      <ellipse cx="30" cy="34" rx="25" ry="31" fill="currentColor"/>
+      <path d="M26 66 L30 72 L34 66 Z" fill="currentColor"/>
+      <ellipse cx="21" cy="22" rx="6" ry="10" fill="#fff" opacity=".45" transform="rotate(20 21 22)"/>
+    </symbol>
+    <symbol id="sparkle" viewBox="0 0 24 24">
+      <path d="M12 0 C13 8 16 11 24 12 C16 13 13 16 12 24 C11 16 8 13 0 12 C8 11 11 8 12 0Z" fill="currentColor"/>
+    </symbol>
+    <symbol id="heart" viewBox="0 0 24 24">
+      <path d="M12 21 C-6 9 4 -2 12 6 C20 -2 30 9 12 21Z" fill="currentColor"/>
+    </symbol>
+    <symbol id="star" viewBox="0 0 24 24">
+      <path d="M12 1.5l3 6.8 7.4.7-5.6 4.9 1.7 7.3L12 17.3 5.5 21.2l1.7-7.3L1.6 9l7.4-.7z" fill="#ffd54a" stroke="#f0a92b" stroke-width="1.2" stroke-linejoin="round"/>
+      <circle cx="9.5" cy="12" r=".9" fill="#7a4a12"/><circle cx="14.5" cy="12" r=".9" fill="#7a4a12"/>
+      <path d="M10.3 14.3q1.7 1.3 3.4 0" stroke="#7a4a12" stroke-width=".8" fill="none" stroke-linecap="round"/>
+    </symbol>
+
+    <!-- full cake (used twice, clipped into halves) -->
+    <g id="cakeFull">
+      <!-- bottom tier -->
+      <rect x="40" y="168" width="220" height="74" rx="10" fill="#fdf1ea"/>
+      <path d="M40 168 H260 V196 q-11 16 -22 0 q-11 16 -22 0 q-11 16 -22 0 q-11 16 -22 0 q-11 16 -22 0 q-11 16 -22 0 q-11 16 -22 0 q-11 16 -22 0 q-11 16 -22 0 q-11 16 -22 0 Z" fill="#ee5c93"/>
+      <rect x="40" y="168" width="220" height="14" rx="7" fill="#f47ba9"/>
+      <!-- middle tier -->
+      <rect x="70" y="118" width="160" height="54" rx="8" fill="#fff"/>
+      <path d="M70 142 H230 V156 H70Z" fill="#cfc4ee"/>
+      <g fill="#fff" opacity=".9"><circle cx="82" cy="149" r="2.2"/><circle cx="102" cy="149" r="2.2"/><circle cx="122" cy="149" r="2.2"/><circle cx="142" cy="149" r="2.2"/><circle cx="162" cy="149" r="2.2"/><circle cx="182" cy="149" r="2.2"/><circle cx="202" cy="149" r="2.2"/><circle cx="218" cy="149" r="2.2"/></g>
+      <path d="M70 118 H230 v10 q-8 10 -16 0 q-8 10 -16 0 q-8 10 -16 0 q-8 10 -16 0 q-8 10 -16 0 q-8 10 -16 0 q-8 10 -16 0 q-8 10 -16 0 q-8 10 -16 0 q-8 10 -16 0Z" fill="#fff"/>
+      <!-- top tier -->
+      <rect x="100" y="76" width="100" height="46" rx="8" fill="#fbd96a"/>
+      <rect x="100" y="76" width="100" height="26" rx="8" fill="#ee5c93"/>
+      <path d="M100 98 q8 12 16 0 q8 12 16 0 q8 12 16 0 q8 12 16 0 q8 12 16 0 q8 12 16 0 Z" fill="#ee5c93"/>
+      <!-- cherries -->
+      <circle cx="116" cy="72" r="8" fill="#c8213f"/><circle cx="184" cy="72" r="8" fill="#c8213f"/>
+      <circle cx="113" cy="69" r="2.2" fill="#fff" opacity=".7"/><circle cx="181" cy="69" r="2.2" fill="#fff" opacity=".7"/>
+      <!-- candles -->
+      <g>
+        <rect x="127" y="44" width="7" height="30" rx="3" fill="#fff"/>
+        <path d="M127 52 l7 -3 M127 60 l7 -3 M127 68 l7 -3" stroke="#6bb8ff" stroke-width="2.2"/>
+        <rect x="166" y="44" width="7" height="30" rx="3" fill="#fff"/>
+        <path d="M166 52 l7 -3 M166 60 l7 -3 M166 68 l7 -3" stroke="#ff7aa8" stroke-width="2.2"/>
+        <rect x="146.5" y="48" width="7" height="28" rx="3" fill="#fff"/>
+        <path d="M146.5 56 l7 -3 M146.5 64 l7 -3 M146.5 72 l7 -3" stroke="#ffcc4a" stroke-width="2.2"/>
+      </g>
+    </g>
+    <clipPath id="clipL"><rect x="-20" y="0" width="170" height="300"/></clipPath>
+    <clipPath id="clipR"><rect x="150" y="0" width="170" height="300"/></clipPath>
+    <radialGradient id="flameG" cx="50%" cy="65%" r="60%">
+      <stop offset="0" stop-color="#fffbe0"/><stop offset=".5" stop-color="#ffd24a"/><stop offset="1" stop-color="#ff8a1f"/>
+    </radialGradient>
+    <symbol id="flame" viewBox="0 0 20 34">
+      <path d="M10 1 C16 10 19 16 19 22 A9 9 0 0 1 1 22 C1 16 4 10 10 1Z" fill="url(#flameG)"/>
+    </symbol>
+  </defs>
+</svg>
+
+<audio id="bgm" loop preload="none" {% if music %}src="{{ music }}"{% endif %}></audio>
+
+<main id="app" aria-live="polite">
+  <canvas id="confetti"></canvas>
+
+  <!-- ====== SCENE 1 : ENVELOPE ====== -->
+  <section class="scene s-envelope" data-scene="0">
+    <div class="wrap center">
+      <p class="script kicker">a little something <svg class="ico"><use href="#sparkle"/></svg></p>
+      <h1 class="serif big">There's<br>something <em>for you</em></h1>
+      <p class="sub">A tiny birthday surprise, made just for you.</p>
+
+      <div class="envelope" id="envelope">
+        <div class="letter-card" id="letterCard">
+          <span class="script tiny">for</span>
+          <span class="script name-big" data-name>Name</span>
+          <span class="dots">✦ ✦ ✦</span>
+        </div>
+        <svg class="env-svg" viewBox="0 0 320 210" aria-hidden="true">
+          <defs>
+            <linearGradient id="envG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f2dfba"/><stop offset="1" stop-color="#e3c898"/></linearGradient>
+          </defs>
+          <rect x="6" y="20" width="308" height="184" rx="14" fill="url(#envG)" stroke="#cfb07a" stroke-width="2"/>
+          <path d="M6 34 L160 128 L314 34" fill="none" stroke="#cfb07a" stroke-width="2"/>
+          <path d="M6 204 L130 110 M314 204 L190 110" stroke="#cfb07a" stroke-width="2" fill="none"/>
+          <path d="M6 34 Q6 20 20 20 L300 20 Q314 20 314 34 L160 128Z" fill="#f6e6c4" stroke="#cfb07a" stroke-width="2" id="envFlap"/>
+          <!-- dried flowers -->
+          <g stroke="#7d6a3e" stroke-width="2" fill="none"><path d="M120 128 Q110 90 100 56"/><path d="M128 128 Q128 84 136 52"/><path d="M136 128 Q150 90 168 60"/></g>
+          <g fill="#9a7ad0"><circle cx="100" cy="54" r="5"/><circle cx="136" cy="50" r="5"/><circle cx="168" cy="58" r="5"/><circle cx="108" cy="72" r="4"/><circle cx="148" cy="72" r="4"/></g>
+          <g fill="#e49aa9"><circle cx="258" cy="150" r="9"/><circle cx="62" cy="150" r="9"/></g>
+          <g fill="#fff3b0"><circle cx="258" cy="150" r="3.5"/><circle cx="62" cy="150" r="3.5"/></g>
+          <!-- ribbon bow -->
+          <path d="M160 126 L118 150 Q100 160 110 176 Q134 166 160 134Z" fill="#9b72cf"/>
+          <path d="M160 126 L202 150 Q220 160 210 176 Q186 166 160 134Z" fill="#8a5fc0"/>
+          <path d="M150 140 L128 190 L142 186 L156 150Z" fill="#8a5fc0"/>
+          <path d="M170 140 L192 190 L178 186 L164 150Z" fill="#9b72cf"/>
+          <!-- wax seal -->
+          <circle cx="160" cy="132" r="21" fill="#d94a78"/>
+          <circle cx="160" cy="132" r="21" fill="none" stroke="#f27ea3" stroke-width="3" opacity=".7"/>
+          <use href="#heart" x="148" y="121" width="24" height="24" style="color:#ffd6e2"/>
+        </svg>
+        <svg class="mate bear-l" viewBox="0 0 120 140"><use href="#teddy" width="120" height="140"/></svg>
+      </div>
+
+      <button class="btn pink" id="btnOpen" type="button"><span class="btn-dot"><svg><use href="#heart"/></svg></span>Open your surprise <span class="spk">✨</span></button>
+    </div>
+    <svg class="deco d1"><use href="#sparkle"/></svg>
+    <svg class="deco d2"><use href="#sparkle"/></svg>
+    <svg class="deco d3"><use href="#heart"/></svg>
+  </section>
+
+  <!-- ====== SCENE 2 : DARK ROOM ====== -->
+  <section class="scene s-dark" data-scene="1">
+    <div class="stars" id="stars"></div>
+    <div class="moon">🌙</div>
+    <div class="rays" id="rays"></div>
+    <div class="wrap center">
+      <p class="script kicker yellow">Shhh...</p>
+      <h1 class="serif big light">The room is<br>waiting for you.</h1>
+      <p class="sub light">Someone left the lights off on purpose.</p>
+      <button class="btn gold" id="btnLights" type="button">Turn on the lights <span class="spk">✨</span></button>
+    </div>
+    <svg class="mate sleeper" viewBox="0 0 120 140"><use href="#teddySleep" width="120" height="140"/></svg>
+  </section>
+
+  <!-- ====== SCENE 3 : HAPPY BIRTHDAY ====== -->
+  <section class="scene s-party" data-scene="2">
+    <svg class="bunting" viewBox="0 0 400 80" preserveAspectRatio="none" aria-hidden="true">
+      <path d="M-10 6 Q200 60 410 6" stroke="#b79a7a" stroke-width="2" fill="none"/>
+      <g id="flags"></g>
+    </svg>
+    <div class="wrap center top">
+      <p class="script kicker rose">Look who's having a birthday...</p>
+      <h1 class="serif big dark">Happy Birthday,<br><em class="name-line"><span data-name>Name</span> <svg class="ico gold"><use href="#sparkle"/></svg></em></h1>
+      <span class="pill"><i></i><span data-date>28 September</span></span>
+      <div><button class="btn pink" id="btnMore" type="button">There's more <span class="spk">🎊</span></button></div>
+    </div>
+    <p class="script yay">yay, you're here!</p>
+    <div class="party-floor"></div>
+    <div class="table"></div>
+    <div class="balloons">
+      <svg viewBox="0 0 60 100" style="color:#f7a58f;left:0;top:30px;width:70px"><use href="#balloon" width="60" height="100"/></svg>
+      <svg viewBox="0 0 60 100" style="color:#fbe0a0;left:46px;top:0;width:66px"><use href="#balloon" width="60" height="100"/></svg>
+      <svg viewBox="0 0 60 100" style="color:#b9a6e8;left:6px;top:80px;width:66px"><use href="#balloon" width="60" height="100"/></svg>
+      <svg viewBox="0 0 60 100" style="color:#93d9bf;left:60px;top:92px;width:60px"><use href="#balloon" width="60" height="100"/></svg>
+      <svg viewBox="0 0 60 100" style="color:#f48fb1;left:96px;top:76px;width:60px"><use href="#balloon" width="60" height="100"/></svg>
+    </div>
+    <div class="gift-box"><svg viewBox="0 0 80 80"><rect x="8" y="30" width="64" height="44" rx="6" fill="#f2a0c0"/><rect x="36" y="30" width="8" height="44" fill="#fff3"/><rect x="4" y="22" width="72" height="14" rx="5" fill="#f58cb4"/><path d="M40 22 Q22 0 16 14 Q22 24 40 22 Q58 24 64 14 Q58 0 40 22Z" fill="#e4568c"/></svg></div>
+    <svg class="mate bear-party" viewBox="0 0 120 140"><use href="#teddy" width="120" height="140"/></svg>
+  </section>
+
+  <!-- ====== SCENE 4 : CAKE ====== -->
+  <section class="scene s-cake" data-scene="3">
+    <svg class="deco star-top" viewBox="0 0 24 24"><use href="#star"/></svg>
+    <div class="wrap center">
+      <p class="script kicker rose" id="cakeKicker">Cake time</p>
+      <h1 class="serif mid" id="cakeTitle">Make the first cut <span class="spk">✨</span></h1>
+      <p class="sub" id="cakeSub">Swipe down across the cake, top to bottom.</p>
+      <div><button class="btn pink hidden" id="btnWish" type="button">Make a wish <span class="spk">🌙</span></button></div>
+
+      <div class="cake-zone" id="cakeZone" role="img" aria-label="Birthday cake. Swipe down across it to cut.">
+        <div class="glow"></div>
+        <svg viewBox="0 0 300 290" class="cake-svg" id="cakeSvg">
+          <ellipse cx="150" cy="252" rx="136" ry="22" fill="#e9e3dc"/>
+          <ellipse cx="150" cy="246" rx="132" ry="18" fill="#fbf8f4"/>
+          <!-- sliced cross-section revealed behind -->
+          <g id="crossSection" opacity="0">
+            <rect x="138" y="168" width="24" height="74" fill="#fdf1ea"/>
+            <rect x="138" y="168" width="24" height="28" fill="#ee5c93"/>
+            <rect x="138" y="204" width="24" height="12" fill="#cfc4ee"/>
+            <rect x="141" y="118" width="18" height="50" fill="#fff"/>
+            <rect x="141" y="132" width="18" height="12" fill="#cfc4ee"/>
+            <rect x="143" y="76" width="14" height="42" fill="#fbd96a"/>
+            <rect x="143" y="76" width="14" height="22" fill="#ee5c93"/>
+          </g>
+          <g id="halfL" clip-path="url(#clipL)"><use href="#cakeFull"/></g>
+          <g id="halfR" clip-path="url(#clipR)"><use href="#cakeFull"/></g>
+          <g id="flames">
+            <use href="#flame" x="125" y="18" width="11" height="22"/>
+            <use href="#flame" x="144.5" y="22" width="11" height="22"/>
+            <use href="#flame" x="164" y="18" width="11" height="22"/>
+          </g>
+          <line id="cutLine" x1="150" y1="70" x2="150" y2="244" stroke="#8a6a6a" stroke-width="1.6" stroke-dasharray="4 5" opacity=".75"/>
+        </svg>
+        <div class="finger" id="finger"></div>
+      </div>
+      <button class="tap-link hidden" id="tapCut" type="button">or tap here to cut</button>
+    </div>
+  </section>
+
+  <!-- ====== SCENE 5 : CLOSE YOUR EYES ====== -->
+  <section class="scene s-wish" data-scene="4">
+    <div class="wrap center">
+      <div class="wish-art">
+        <div class="glow big"></div>
+        <svg class="mate bear-wish" viewBox="0 0 120 140"><use href="#teddyJoy" width="120" height="140"/></svg>
+        <svg class="mini-cake" viewBox="0 0 300 290"><ellipse cx="150" cy="252" rx="120" ry="20" fill="#e9e3dc"/><use href="#cakeFull"/><use href="#flame" x="125" y="18" width="11" height="22"/><use href="#flame" x="144.5" y="22" width="11" height="22"/><use href="#flame" x="164" y="18" width="11" height="22"/></svg>
+      </div>
+      <h1 class="serif mid slant" id="wishTitle">Close your eyes...</h1>
+      <p class="sub slant" id="wishSub">Make a little wish for the year ahead.</p>
+      <button class="btn pink disabled" id="btnMade" type="button">I made my wish <span class="spk">✨</span></button>
+    </div>
+  </section>
+
+  <!-- ====== SCENE 6 : WISH ON ITS WAY ====== -->
+  <section class="scene s-sent" data-scene="5">
+    <div class="wrap center">
+      <div class="wish-art">
+        <div class="glow big"></div>
+        <svg class="mate bear-wish" viewBox="0 0 120 140"><use href="#teddyJoy" width="120" height="140"/></svg>
+        <svg class="mini-cake" viewBox="0 0 300 290"><ellipse cx="150" cy="252" rx="120" ry="20" fill="#e9e3dc"/><use href="#cakeFull"/></svg>
+        <div class="shoot" id="shoot"></div>
+      </div>
+      <h1 class="serif mid slant">Your wish is on its way <span class="spk">✨</span></h1>
+      <p class="sub slant">Somewhere, a tiny star just said yes.</p>
+      <button class="btn pink dim" type="button" tabindex="-1">I made my wish <span class="spk">✨</span></button>
+    </div>
+  </section>
+
+  <!-- ====== SCENE 7 : MEMORIES ====== -->
+  <section class="scene s-memories" data-scene="6">
+    <div class="wrap center">
+      <h1 class="serif mid dark">Some moments are<br>worth keeping forever.</h1>
+      <p class="script sub-script">Here's to all the laughs, chaos, late-night talks and little moments.</p>
+      <div class="polaroids" id="polaroids"></div>
+      <div><button class="btn pink" id="btnLetter" type="button">Read your letter <span class="spk">💌</span></button></div>
+    </div>
+  </section>
+
+  <!-- ====== SCENE 8 : LETTER ====== -->
+  <section class="scene s-letter" data-scene="7">
+    <div class="wrap">
+      <article class="paper" id="paper">
+        <p class="script kicker rose">for, just for you</p>
+        <h2 class="serif letter-title">For you, <em class="script" data-name>Name</em></h2>
+        <div id="letterBody"></div>
+        <p class="script signoff" data-sender>Someone Special</p>
+        <svg class="deco star-paper" viewBox="0 0 24 24"><use href="#star"/></svg>
+      </article>
+      <div class="center"><button class="btn pink" id="btnLast" type="button">One last thing <span class="spk">👑</span></button></div>
+    </div>
+  </section>
+
+  <!-- ====== SCENE 9 : FINALE ====== -->
+  <section class="scene s-final" data-scene="8">
+    <div class="rise" id="rise"></div>
+    <div class="wrap center">
+      <div class="final-bear">
+        <svg class="balloon-hold" viewBox="0 0 60 100" style="color:#f48fb1"><use href="#balloon" width="60" height="100"/></svg>
+        <svg class="mate" viewBox="0 0 120 140"><use href="#teddy" width="120" height="140"/></svg>
+      </div>
+      <h1 class="serif huge dark">Happy Birthday,<br><em class="name-line"><span data-name>Name</span>! <span class="cake-emoji">🎂</span></em></h1>
+      <p class="sub">May this year bring you countless little reasons to smile.</p>
+      <p class="script from">— with love, <span data-sender>Someone Special</span></p>
+      <button class="btn white" id="btnReplay" type="button">Replay the surprise ↻</button>
+    </div>
+  </section>
+
+  <button id="soundBtn" class="sound {% if not music %}hidden{% endif %}" type="button" aria-label="Toggle music">🔇</button>
+  <div class="progress" id="progress" aria-hidden="true"></div>
+</main>
+
+<script id="gift-data" type="application/json">{{ gift|tojson }}</script>
+<script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+</html>

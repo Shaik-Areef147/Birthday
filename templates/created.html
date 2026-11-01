@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{% if link %}Your surprise is ready{% else %}Not found{% endif %}</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;700&family=Nunito:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  body{margin:0;min-height:100vh;display:grid;place-items:center;padding:20px;font-family:'Nunito',sans-serif;background:linear-gradient(160deg,#fff6ee,#f8dfe6);color:#2b2230;text-align:center}
+  .card{max-width:480px;background:#fff;border-radius:22px;padding:32px 24px;box-shadow:0 18px 40px -16px rgba(120,60,90,.35)}
+  h1{font-family:'Fraunces',serif;margin:0 0 10px}
+  input{width:100%;padding:12px;border:2px solid #efd9e3;border-radius:12px;font:inherit;margin:14px 0}
+  a.b,button{display:inline-block;padding:13px 26px;border:0;border-radius:999px;background:#e0457f;color:#fff;font:700 16px 'Nunito';text-decoration:none;cursor:pointer;margin:4px}
+  a.b.alt{background:#fff;color:#e0457f;border:2px solid #e0457f}
+</style>
+</head>
+<body>
+<div class="card">
+{% if link %}
+  <h1>Your surprise is ready 🎉</h1>
+  <p>Share this link:</p>
+  <input id="l" value="{{ link }}" readonly onclick="this.select()">
+  <button type="button" onclick="var i=document.getElementById('l');i.select();navigator.clipboard&&navigator.clipboard.writeText(i.value);this.textContent='Copied!'">Copy link</button>
+  <a class="b alt" href="{{ link }}">Preview</a>
+{% else %}
+  <h1>Oops, nothing here 🎈</h1>
+  <p>This page doesn't exist.</p>
+  <a class="b" href="/">Go home</a>
+{% endif %}
+</div>
+</body>
+</html>
